@@ -16,3 +16,17 @@ ADD mysqlstart.sh /etc/service/mysql/run
 # install NodeJS
 RUN curl -sL https://deb.nodesource.com/setup | sudo bash -
 RUN apt-get install -y nodejs
+RUN npm install stylus nib jeet -g
+
+RUN chown -R www-data:www-data /data/src/html
+RUN chmod -R 747 /data/src/html
+
+# create wordpress database
+ADD ./start.sh /start.sh
+RUN chmod 755 /start.sh
+RUN /start.sh
+
+# private expose
+EXPOSE 80
+
+CMD ["/sbin/my_init"]
