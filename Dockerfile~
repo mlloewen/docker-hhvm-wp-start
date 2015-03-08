@@ -18,7 +18,7 @@ RUN curl -sL https://deb.nodesource.com/setup | sudo bash -
 RUN apt-get install -y nodejs
 RUN npm install stylus nib jeet -g
 
-RUN chown -R root:root /data/src/html
+RUN chown -R root:root /data/src/html/.
 RUN chmod -R 747 /data/src/html
 
 # create wordpress database
@@ -29,7 +29,11 @@ RUN /bin/bash /mysqldbinit.sh
 # install some initial WP plugins and Themes
 ADD wpinit.sh /
 RUN /bin/bash /wpinit.sh
-	 
+
+# Correct nginx path for wp permalinks	 
+RUN sed -i -e"s/keepalive_timeout\s*65/keepalive_timeout 2/" /etc/nginx/nginx.conf
+RUN sed -i -e"s/keepalive_timeout 2/keepalive_timeout 2;\n\tclient_max_body_size 100m/" /etc/nginx/nginx.conf
+ADD default.conf /etc/nginx/sites-available/default
 
 # private expose
 EXPOSE 80
