@@ -11,7 +11,7 @@ RUN \
 # install MariaDB
 RUN  apt-get update && apt-get install -y mariadb-server pwgen
 RUN mkdir /etc/service/mysql
-ADD mysqlmysqldbinit.sh /etc/service/mysql/run
+ADD mysqlstart.sh /etc/service/mysql/run
 
 # install NodeJS
 RUN curl -sL https://deb.nodesource.com/setup | sudo bash -
@@ -22,12 +22,12 @@ RUN chown -R www-data:www-data /data/src/html
 RUN chmod -R 747 /data/src/html
 
 # create wordpress database
-ADD ./mysqldbinit.sh /mysqldbinit.sh
-RUN chmod 755 /mysqldbinit.sh
+ADD mysqldbinit.sh /
+RUN chmod 755 /
 RUN /bin/bash /mysqldbinit.sh
 
 # install some initial WP plugins and Themes
-RUN \
+RUN /bin/bash /wpinit.sh
 	 
 
 # private expose
