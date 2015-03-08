@@ -18,7 +18,7 @@ RUN curl -sL https://deb.nodesource.com/setup | sudo bash -
 RUN apt-get install -y nodejs
 RUN npm install stylus nib jeet -g
 
-RUN chown -R www-data:www-data /data/src/html
+RUN chown -R root:root /data/src/html
 RUN chmod -R 747 /data/src/html
 
 # create wordpress database
@@ -27,6 +27,7 @@ RUN chmod 755 /
 RUN /bin/bash /mysqldbinit.sh
 
 # install some initial WP plugins and Themes
+ADD wpinit.sh /
 RUN /bin/bash /wpinit.sh
 	 
 
