@@ -16,7 +16,13 @@ ADD mysqlstart.sh /etc/service/mysql/run
 # install NodeJS
 RUN curl -sL https://deb.nodesource.com/setup | sudo bash -
 RUN apt-get install -y nodejs
-RUN npm install stylus nib jeet -g
+
+# https://github.com/LearnBoost/stylus
+# https://github.com/corysimmons/lost
+# https://github.com/jenius/axis
+# https://github.com/jenius/rupture
+# https://github.com/jenius/autoprefixer-stylus
+RUN npm install stylus lost-grid typographic rupture autoprefixer-stylus -g
 
 RUN chown -R root:root /data/src/html/.
 RUN chmod -R 747 /data/src/html
@@ -29,6 +35,8 @@ RUN /bin/bash /mysqldbinit.sh
 # install some initial WP plugins and Themes
 ADD wpinit.sh /
 RUN /bin/bash /wpinit.sh
+
+RUN apt-get clean
 
 # Correct nginx path for wp permalinks	 
 RUN sed -i -e"s/keepalive_timeout\s*65/keepalive_timeout 2/" /etc/nginx/nginx.conf

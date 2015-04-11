@@ -2,6 +2,7 @@
 cd /data/src/html/wordpress/wp-content/plugins
 if [ ! -f /data/src/html/wordpress/wp-content/plugins/Revisr/readme.txt ]; then
 	git clone https://github.com/ExpandedFronts/Revisr.git
+	git clone https://github.com/mlloewen/sermon-manager-for-muir.git
 fi
 cd /data/src/html/wordpress/wp-content/themes
 if [ ! -f /data/src/html/wordpress/wp-content/themes/WP-Flex/style.css ]; then
